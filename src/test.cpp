@@ -21,22 +21,14 @@ int alloc_buffers;
 
 	mkl_peak_mem_usage(MKL_PEAK_MEM_ENABLE);
 
-	// Create the native array
 	double *nativeMatrix = new double[X_SIZE*Y_SIZE];
 	MAT2D<double> test_array(X_SIZE, Y_SIZE);
-//	MAT2D_NA<double> test_array_na(X_SIZE, Y_SIZE);
 	startTime = dsecnd();
 
 	for (int i = 0; i < ITERATIONS; ++i)
-	{
 		for (int x = 0; x < X_SIZE; ++x)
-		{
 	    		for (int y = 0; y < Y_SIZE; ++y)
-	    		{
 				boostMatrix[x][y] = 2.345;
-	    		}
-		}
-	}
 
 	endTime = dsecnd();
 	std::cout << std::setprecision(8) << std::fixed << "Boost elapsed time is : " << (endTime - startTime) << std::endl;
@@ -45,17 +37,10 @@ int alloc_buffers;
 	std::cout << "Size of array is " << test_array.size() << " GB" << std::endl;
 	startTime = dsecnd();
 	for (int i = 0; i < ITERATIONS; ++i)
-	{
 		for (int y = 0; y < Y_SIZE; ++y)
-		{
 	    		for (int x = 0; x < X_SIZE; ++x)
-	    		{
-//	        		nativeMatrix[x + (y * X_SIZE)] = 2.345;
-				test_array.data[y][x] = 2.345;		
-//				test_array_na.data[y][x] = 2.345;
-	    		}
-		}
-	}
+				test_array.data[y][x] = 2.345;
+				
 	std::cout << "Peak memory usage is " << mkl_peak_mem_usage(MKL_PEAK_MEM) << std::endl;
 	endTime = dsecnd();
 	mkl_peak_mem_usage(MKL_PEAK_MEM_RESET);
@@ -69,20 +54,11 @@ int alloc_buffers;
 
     	startTime = dsecnd();
     	for (int i = 0; i < ITERATIONS; ++i)
-    	{
         	for (int y = 0; y < Y_SIZE; ++y)
-        	{
             		for (int x = 0; x < X_SIZE; ++x)
-            		{
                 		blitzArray(x,y) = 2.345;
-           		 }
-        	}
-    	}
 	endTime = dsecnd();
 
-
-//	std::cout << nativeMatrix[99] << " " << std::endl;
-//	std::cout << test_array.data[5][5] << " " << std::endl;
 	endTime = dsecnd(); //::GetTickCount();
 	std::cout << std::setprecision(8) << std::fixed << "blitz elapsed time is : " << (endTime - startTime) << std::endl;
 return 0;
